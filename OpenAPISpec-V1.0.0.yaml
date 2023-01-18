@@ -1,0 +1,72 @@
+openapi: 3.0.0
+info:
+  description: |
+    This is the API spec sheet for hashing strings and files
+  version: "1.0.0"
+  title: Hashing API
+  contact:
+    email: support@galago.tech
+    name: Galago Tech Support
+  license:
+    name: GPL V3
+    url: 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+servers:
+  - url: 'http://localhost'
+tags:
+  - name: general
+    description: All endpoints for general functions
+paths:
+  /v1/{algorithm}:
+    get:
+      tags:
+        - general
+      summary: Hashes a string
+      operationId: string
+      parameters:
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: algorithm
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Returns the hash
+          content:
+            text/plain:
+              schema:
+                type: string
+    post:
+      tags:
+        - general
+      summary: Hashes a file
+      operationId: file
+      parameters:
+        - name: authorization
+          in: header
+          required: true
+          schema:
+            type: string
+        - name: algorithm
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/binary:
+            schema:
+              format: binary
+        description: The file to hash
+        required: true
+      responses:
+        '200':
+          description: Returns the hash
+          content:
+            text/plain:
+              schema:
+                type: string
